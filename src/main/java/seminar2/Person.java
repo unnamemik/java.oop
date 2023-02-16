@@ -1,4 +1,4 @@
-package seminar1;
+package seminar2;
 
 import java.util.HashSet;
 
@@ -6,10 +6,11 @@ public class Person {
     private int age;
     public String name;
     public String sex;
-
-    public final static String MALE = "m";
-    public final static String FEMALE = "f";
     public int gen;
+
+    public Person pet;
+    public Person petMaster;
+
 
     public int sposes;
     public HashSet<Integer> directRelative = new HashSet<>(1);
@@ -23,7 +24,7 @@ public class Person {
         this.sex = sex;
     }
 
-    public void setSposes(int sposes){
+    public void setSposes(int sposes) {
         this.sposes = sposes;
     }
 
@@ -33,7 +34,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return  name +
+        return name +
                 ":  age=" + age +
                 ", sex='" + sex + '\'';
     }
