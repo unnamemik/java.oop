@@ -1,4 +1,4 @@
-package seminar2;
+package seminar3;
 
 import java.util.Scanner;
 
@@ -47,19 +47,19 @@ public class Engine {
             checkExit = userIntegerInput(cyan + "\nВведите номер параметра для поиска. Для выхода в предыдущее меню нажмите 0. " + reset);
             switch (checkExit) {
                 case 1 -> {
-                    Relations.printPopulation();
+                    Info.getPopulationInfo();
                 }
                 case 2 -> {
-                    Relations.printDirRel();
+                    Info.dirRelInfo();
                 }
                 case 3 -> {
-                    Relations.printGeneration();
+                    Info.generationInfo();
                 }
                 case 4 -> {
-                    Relations.printSposesRel();
+                    Info.sposesRelInfo();
                 }
                 case 5 -> {
-                    Relations.printChildsRel();
+                    Info.childsRelInfo();
                 }
             }
             System.out.println(yellow + "\nПоиск завершен." + reset);

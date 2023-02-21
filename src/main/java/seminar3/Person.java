@@ -1,12 +1,17 @@
-package seminar2;
+package seminar3;
+
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
-
+@Getter
+@Setter
 public class Person {
     private int age;
-    public String name;
-    public String sex;
-    public int gen;
+    private String name;
+    private String sex;
+    private int gen = 1;
 
     public Person pet;
     public Person petMaster;
@@ -22,14 +27,6 @@ public class Person {
         this.name = name;
         this.age = age;
         this.sex = sex;
-    }
-
-    public void setSposes(int sposes) {
-        this.sposes = sposes;
-    }
-
-    public int getSposes() {
-        return sposes;
     }
 
     @Override

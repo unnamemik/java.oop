@@ -1,4 +1,4 @@
-package seminar2;
+package seminar3;
 
 
 public class Printer {

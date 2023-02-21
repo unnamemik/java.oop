@@ -1,10 +1,10 @@
-package seminar2;
+package seminar3;
 
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-import static seminar2.Main.population;
+import static seminar3.Main.population;
 
 public interface Relations {
     static void marriage(Person husband, Person wife) {
@@ -23,6 +23,7 @@ public interface Relations {
         child.directRelative.addAll(father.directRelative);
         child.directRelative.addAll(mother.directRelative);
 
+        child.setGen(father.getGen()+1);
     }
 
     static Person findViaHash(int hash) {
@@ -36,21 +37,21 @@ public interface Relations {
     }
 
     static void findParents(Person pers) {
-        System.out.println("\n" + pers.name + ", родители:");
+        System.out.println("\n" + pers.getName() + ", родители:");
         for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            if (entry.getValue().childsRelative.contains(pers.hashCode()) & entry.getValue().gen == pers.gen - 1) {
-                System.out.println(entry.getValue().name + "\t" + entry.getKey().hashCode());
+            if (entry.getValue().childsRelative.contains(pers.hashCode()) & entry.getValue().getGen() == pers.getGen() - 1) {
+                System.out.println(entry.getValue().getName() + "\t" + entry.getKey().hashCode());
             }
         }
     }
 
     static void findChildren(Person pers) {
         Iterator iter = pers.childsRelative.iterator();
-        System.out.println("\n" + pers.name + ", дети:");
+        System.out.println("\n" + pers.getName() + ", дети:");
         if (!pers.childsRelative.isEmpty()) {
             while (iter.hasNext()) {
                 Person curPers = findViaHash(iter.next().hashCode());
-                System.out.println(curPers.name + "\t" + curPers.hashCode());
+                System.out.println(curPers.getName() + "\t" + curPers.hashCode());
             }
         }
     }
@@ -58,44 +59,44 @@ public interface Relations {
     static void findBrothersAndSisters(Person pers) {
         HashSet<Integer> childSet = new HashSet<>(1);
         for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            if (entry.getValue().childsRelative.contains(pers.hashCode()) & entry.getValue().gen == pers.gen - 1) {
+            if (entry.getValue().childsRelative.contains(pers.hashCode()) & entry.getValue().getGen() == pers.getGen() - 1) {
                 if (!childSet.contains(entry.getKey().hashCode())) {
                     childSet.addAll(entry.getValue().childsRelative);
                 }
             }
         }
-        System.out.println("\n" + pers.name + ", брат/сестра:");
+        System.out.println("\n" + pers.getName() + ", брат/сестра:");
         for (Integer elem : childSet)
-            System.out.println(findViaHash(elem).name + "\t" + elem);
+            System.out.println(findViaHash(elem).getName() + "\t" + elem);
     }
 
     static void findPet(Person pers) throws NullPointerException {
-        System.out.println("\n" + pers.name + ", питомцы:");
-        if (!pers.pet.name.isEmpty()) {
-            System.out.println(pers.pet.name + "\t" + pers.pet.hashCode());
+        System.out.println("\n" + pers.getName() + ", питомцы:");
+        if (!pers.pet.getName().isEmpty()) {
+            System.out.println(pers.pet.getName() + "\t" + pers.pet.hashCode());
         }
     }
 
     static void findGrands(Person pers) {
         HashSet<Integer> grands = new HashSet<>(1);
         for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            if (entry.getValue().gen == pers.gen - 2) {
+            if (entry.getValue().getGen() == pers.getGen() - 2) {
                 grands.add(entry.getKey().hashCode());
             }
         }
-        System.out.println("\n" + pers.name + ", дедушки/бабушки:");
+        System.out.println("\n" + pers.getName() + ", дедушки/бабушки:");
         for (Integer elem : grands)
-            System.out.println(findViaHash(elem).name + "\t" + elem);
+            System.out.println(findViaHash(elem).getName() + "\t" + elem);
     }
 
     static void findUncles(Person pers) {
         HashSet<Integer> setUncles = new HashSet<>(1);
         for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            if (entry.getValue().gen == pers.gen - 2) {
+            if (entry.getValue().getGen() == pers.getGen() - 2) {
                 setUncles.add(entry.getKey().hashCode());
             }
         }
-        System.out.println("\n" + pers.name + ", дяди/тети:");
+        System.out.println("\n" + pers.getName() + ", дяди/тети:");
         HashSet<Person> sortUncles = new HashSet<>(1);
         for (Integer elem : setUncles)
             if (!findViaHash(elem).childsRelative.isEmpty()) {
@@ -107,61 +108,24 @@ public interface Relations {
                 }
             }
         for (Person uncle : sortUncles) {
-            System.out.println(uncle.name + "\t" + uncle.hashCode());
+            System.out.println(uncle.getName() + "\t" + uncle.hashCode());
         }
     }
 
     static void findCousins(Person pers) {
         HashSet<Integer> childSet = new HashSet<>(1);
         for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            if (entry.getValue().childsRelative.contains(pers.hashCode()) & entry.getValue().gen == pers.gen - 1) {
+            if (entry.getValue().childsRelative.contains(pers.hashCode()) & entry.getValue().getGen() == pers.getGen() - 1) {
                 if (!childSet.contains(entry.getKey().hashCode())) {
                     childSet.addAll(entry.getValue().childsRelative);
                 }
             }
         }
-        System.out.println("\n" + pers.name + ", племянник/племянница:");
+        System.out.println("\n" + pers.getName() + ", племянник/племянница:");
         for (Integer elem : childSet)
             for (Integer children : findViaHash(elem).childsRelative) {
-                System.out.println(findViaHash(children).name + "\t" + children);
+                System.out.println(findViaHash(children).getName() + "\t" + children);
             }
         //System.out.println(findViaHash(elem).name + "\t" + elem);
     }
-
-    //////////////////////////////////////////////////////////// INFO //////////////////////////////////////////////////////
-    static void printPopulation() {
-        System.out.println("\nPopulation:");
-        for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            System.out.println(entry.getValue().name + "\t" + entry.getKey().hashCode());
-        }
-    }
-
-    static void printGeneration() {
-        System.out.println("\nGeneration:");
-        for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            System.out.println(entry.getValue().name + "\t" + entry.getValue().gen);
-        }
-    }
-
-    static void printDirRel() {
-        System.out.println("\nDirect relative");
-        for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            System.out.println(entry.getValue().name + "\t" + entry.getValue().directRelative);
-        }
-    }
-
-    static void printChildsRel() {
-        System.out.println("\nChilds relative");
-        for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            System.out.println(entry.getValue().name + "\t" + entry.getValue().childsRelative);
-        }
-    }
-
-    static void printSposesRel() {
-        System.out.println("\nSposes relative");
-        for (Map.Entry<Integer, Person> entry : population.entrySet()) {
-            System.out.println(entry.getValue().name + "\t" + entry.getValue().sposeRelative);
-        }
-    }
-    //////////////////////////////////////////////////////////// INFO //////////////////////////////////////////////////////
 }
