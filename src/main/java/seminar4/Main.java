@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
+import static seminar4.Recorder.recorder;
+
 
 public class Main {
 
@@ -70,6 +72,7 @@ public class Main {
         calendar.set(Calendar.DAY_OF_MONTH, day);
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
+        recorder("Время напоминания: " + day + hour + minute);
 
         Timer time = new Timer();
         time.schedule(new Task(currentNote), calendar.getTime(), TimeUnit.HOURS.toMillis(8));
