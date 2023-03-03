@@ -4,12 +4,10 @@ import seminar5.model.Complex;
 
 import java.util.Scanner;
 
-public class View {
-    public static final String reset = "\u001B[0m";
-    public static final String red = "\u001B[31m";
-    public static final String yellow = "\u001B[33m";
-    public static final String cyan = "\u001B[36m";
+import static seminar5.view.ColorConstant.RED;
+import static seminar5.view.ColorConstant.RESET;
 
+public class View {
 
     public Double getInpDouble(String inp) {
         Scanner sc = new Scanner(System.in);
@@ -20,7 +18,7 @@ public class View {
                 inputStr = Double.parseDouble(sc.next());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(red + "Неверный ввод! Введите рациональное число!" + reset);
+                System.out.println(RED + "Неверный ввод! Введите рациональное число!" + RESET);
             }
         }
         return inputStr;
@@ -35,7 +33,7 @@ public class View {
                 inputStr = Integer.parseInt(sc.next());
                 break;
             } catch (NumberFormatException e) {
-                System.out.println(red + "Неверный ввод! Введите целое число!" + reset);
+                System.out.println(RED + "Неверный ввод! Введите целое число!" + RESET);
             }
         }
         return inputStr;
